@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "388245278227",
+    "firebase_url": "https://aiforhrrecruit.firebaseio.com",
+    "project_id": "aiforhrrecruit",
+    "storage_bucket": "aiforhrrecruit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388245278227:android:31fdf1a2a95169f0",
+        "android_client_info": {
+          "package_name": "edu.itm.aiforhrrecruit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388245278227-l3sddqrr17h0iquru8bt92ebicpdl3ar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.itm.aiforhrrecruit",
+            "certificate_hash": "03e2c7c942ccdfd10ef6a4972ede5586369987e5"
+          }
+        },
+        {
+          "client_id": "388245278227-ob20efag5o0qpel7067287jcekh17fqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArTcqRqpjUq9tZk6H0okiPynrZHAoxB_k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388245278227-ob20efag5o0qpel7067287jcekh17fqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

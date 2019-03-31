@@ -1,9 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    android:background="@drawable/back"
+    tools:context=".Activities.HomeActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:elevation="6dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ai for HR Recruit"
+            android:textSize="25sp"
+            android:gravity="center_vertical"
+            android:textColor="#fff"
+            android:id="@+id/tx"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <TextView
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="20dp"
+        android:id="@+id/pbstatement"
+        android:textStyle="italic|bold"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/white"
+        android:text="        \“We simply want to reduce attrition rate of Organisations by Recommending Perfect Candidates using AI\“ "/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pbstatement"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="onClickMrf">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="4dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:layout_marginRight="18dp"
+                        android:id="@+id/a1"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="New MRF"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/mrf"
+                        android:layout_above="@+id/a1"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="onClickPanel">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="4dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:layout_marginRight="18dp"
+                        android:id="@+id/a2"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Interview Panel"
+                        android:layout_alignParentBottom="true"
+                        />
+
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/interview"
+                        android:layout_above="@+id/a2"
+                        />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="2"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                android:layout_width="match_parent"
+                app:cardElevation="10dp"
+
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="10dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="onClickResults">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_above="@+id/a3"
+                        android:src="@drawable/chart"/>
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="4dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:layout_marginRight="18dp"
+                        android:id="@+id/a3"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorPrimary"
+                        android:maxLines="1"
+                        android:text="Results"
+                        android:layout_alignParentBottom="true"
+                   />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                android:layout_width="match_parent"
+                app:cardElevation="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="onClickCandidateDataUpload">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_above="@+id/a4"
+                        android:src="@drawable/upload"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="4dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="8dp"
+                        android:layout_marginRight="18dp"
+                        android:id="@+id/a4"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Data Upload"
+                        android:layout_alignParentBottom="true"
+                        />
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

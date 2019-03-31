@@ -1,8 +1,10 @@
-package edu.itm.aiforhrrecruit;
+package edu.itm.aiforhrrecruit.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import edu.itm.aiforhrrecruit.R;
 
 public class SplashActivity extends AppCompatActivity {
 
