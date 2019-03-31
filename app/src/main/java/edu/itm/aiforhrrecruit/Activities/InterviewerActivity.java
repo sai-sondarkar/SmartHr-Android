@@ -11,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,22 +20,41 @@ import java.util.List;
 
 import edu.itm.aiforhrrecruit.FirebaseExtra.FirebaseInit;
 import edu.itm.aiforhrrecruit.R;
+import edu.itm.aiforhrrecruit.model.CandidatesData;
 import edu.itm.aiforhrrecruit.model.CompetencyModel;
 import edu.itm.aiforhrrecruit.model.ProfileModel;
 import edu.itm.aiforhrrecruit.model.TeamLeadModel;
 
-public class MRFActivity extends AppCompatActivity {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-    List<TeamLeadModel> teamLeadModelList = new ArrayList<TeamLeadModel>();;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+public class InterviewerActivity extends AppCompatActivity {
+
+
+    List<CandidatesData> candidatesDataList = new ArrayList<CandidatesData>();;
     List<CompetencyModel> competencyModelList = new ArrayList<CompetencyModel>();
+    List<ProfileModel> profileModelList = new ArrayList<ProfileModel>();
     List<String> NameList = new ArrayList<String>();
-    private Spinner spinner1;
-    ArrayAdapter<String> dataAdapter;
+    List<String> PositionList = new ArrayList<String>();
+
+    private Spinner spinner1,spinner2;
+    ArrayAdapter<String> dataAdapter,dataAdapter2;
 
     TextView question,comp1,comp2,comp3,comp4;
     boolean comp1_b,comp2_b,comp3_b,comp4_b;
 
-    EditText ed1,ed2;
 
     int counter=0;
     Button button;
@@ -48,38 +66,42 @@ public class MRFActivity extends AppCompatActivity {
 
     String competency ;
 
-
+    RequestQueue MyRequestQueue;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mrf);
+        setContentView(R.layout.activity_interviewer);
+
+
+        MyRequestQueue = Volley.newRequestQueue(this);
+
+
+        initUi();
 
         comp1_b = true;
         comp2_b = true;
         comp3_b = true;
         comp4_b = true;
 
-
-        initUi();
-
-
-
-
     }
+
 
     public void initUi(){
 
         spinner1 = (Spinner) findViewById(R.id.spinner);
+        spinner2 = (Spinner) findViewById(R.id.spinner2);
         button = (Button) findViewById(R.id.next);
 
-        ed1 = (EditText) findViewById(R.id.role);
-        ed2 = (EditText) findViewById(R.id.applicationNumber_li);
         dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, NameList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, PositionList);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         question = (TextView) findViewById(R.id.quest);
         comp1 = (TextView) findViewById(R.id.comp1);
@@ -117,11 +139,13 @@ public class MRFActivity extends AppCompatActivity {
 
                     ProfileModel profileModel = new ProfileModel();
 
-                    profileModel.setProfile(ed1.getText().toString());
-                    profileModel.setSrno(ed2.getText().toString());
                     profileModel.setProfile_competencies(competency);
                     int pos = NameList.indexOf(String.valueOf(spinner1.getSelectedItem()));
-                    profileModel.setTeaml_competencies(teamLeadModelList.get(pos).getCompetencyList());
+                    int pos2 = PositionList.indexOf(String.valueOf(spinner2.getSelectedItem()));
+
+
+
+                    callSkillMatch(competency,profileModelList.get(0).getTeaml_competencies(),profileModelList.get(0).getProfile_competencies(),0.6f,0.7f);
 
                     FirebaseInit.getDatabase().getReference().child("mrfs").push().setValue(profileModel);
 
@@ -188,9 +212,6 @@ public class MRFActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void compMapping(){
 
 
@@ -207,24 +228,24 @@ public class MRFActivity extends AppCompatActivity {
         comp4.setVisibility(View.GONE);
 
 
-            model = competencyModelList.get(counter);
-            question.setText(model.getCompetencyName());
+        model = competencyModelList.get(counter);
+        question.setText(model.getCompetencyName());
 
-            for(int i =0; i<model.getCompetencyLevel().size();i++){
-                if(i == 0 ){
-                    comp1.setVisibility(View.VISIBLE);
-                    comp1.setText(model.getCompetencyLevel().get(i));
-                }else if(i == 1){
-                    comp2.setVisibility(View.VISIBLE);
-                    comp2.setText(model.getCompetencyLevel().get(i));
-                }else if(i == 2){
-                    comp3.setVisibility(View.VISIBLE);
-                    comp3.setText(model.getCompetencyLevel().get(i));
-                }else if(i == 3){
-                    comp4.setVisibility(View.VISIBLE);
-                    comp4.setText(model.getCompetencyLevel().get(i));
-                }
+        for(int i =0; i<model.getCompetencyLevel().size();i++){
+            if(i == 0 ){
+                comp1.setVisibility(View.VISIBLE);
+                comp1.setText(model.getCompetencyLevel().get(i));
+            }else if(i == 1){
+                comp2.setVisibility(View.VISIBLE);
+                comp2.setText(model.getCompetencyLevel().get(i));
+            }else if(i == 2){
+                comp3.setVisibility(View.VISIBLE);
+                comp3.setText(model.getCompetencyLevel().get(i));
+            }else if(i == 3){
+                comp4.setVisibility(View.VISIBLE);
+                comp4.setText(model.getCompetencyLevel().get(i));
             }
+        }
 
 
 
@@ -242,24 +263,21 @@ public class MRFActivity extends AppCompatActivity {
 
     public void getDataBase(){
 
-        FirebaseInit.getDatabase().getReference().child("employeesCompetencies").addChildEventListener(new ChildEventListener() {
+        FirebaseInit.getDatabase().getReference().child("candidatesDB").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-
-                    try{
-
-                        TeamLeadModel teamLeadModel = dataSnapshot.getValue(TeamLeadModel.class);
-                        teamLeadModel.setKey(dataSnapshot.getKey());
-                        teamLeadModelList.add(teamLeadModel);
-                        dataAdapter.add(teamLeadModel.getName());
-                        spinner1.setAdapter(dataAdapter);
-                        Toast.makeText(getApplicationContext(),"in DB Retrive",Toast.LENGTH_SHORT).show();
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(),"Error in DB Retrive " + e,Toast.LENGTH_SHORT).show();
-                        Log.d("Error parsing",""+e);
-                    }
-
+                try{
+                    CandidatesData candidatesData = dataSnapshot.getValue(CandidatesData.class);
+                    candidatesData.setKey(dataSnapshot.getKey());
+                    candidatesDataList.add(candidatesData);
+                    dataAdapter.add(candidatesData.getName());
+                    spinner1.setAdapter(dataAdapter);
+                    Toast.makeText(getApplicationContext(),"in DB Retrive",Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(),"Error in DB Retrive " + e,Toast.LENGTH_SHORT).show();
+                    Log.d("Error parsing",""+e);
+                }
 
 
             }
@@ -286,7 +304,43 @@ public class MRFActivity extends AppCompatActivity {
         });
 
 
+        FirebaseInit.getDatabase().getReference().child("mrfs").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
+               try{
+                   ProfileModel profileModel = dataSnapshot.getValue(ProfileModel.class);
+                   profileModelList.add(profileModel);
+                   dataAdapter2.add(profileModel.getProfile());
+                   spinner2.setAdapter(dataAdapter2);
+               }catch (Exception e){
+
+               }
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         FirebaseInit.getDatabase().getReference().child("competencyMapping").child("salesRole").addChildEventListener(new ChildEventListener() {
@@ -336,5 +390,31 @@ public class MRFActivity extends AppCompatActivity {
 
 
 
+    public void callSkillMatch(final String competency, final String tl, final String pl, final float tlm, final float plm){
+
+
+            JSONObject person1 = new JSONObject();
+            try {
+                person1.put("candidate_compitencies", competency);
+                person1.put("leader_competencies", tl);
+                person1.put("profile_competencies", pl);
+                person1.put("tl_multiplier", tlm);
+                person1.put("pl_multiplier", plm);
+
+
+            } catch (JSONException e) {
+// TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+
+
+
+    }
 
 }
+
+
+
+

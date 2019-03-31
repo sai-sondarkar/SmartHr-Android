@@ -157,9 +157,8 @@
         android:textColor="@color/colorPrimary"
         android:text="No Account? Contact Developer !"
         android:layout_width="match_parent"
-        android:textSize="17sp"
-        android:clickable="true"
-        android:onClick="OnClickSignUp"
+        android:textSize="15sp"
+
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
